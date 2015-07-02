@@ -27,7 +27,8 @@ function endStore (store, t) {
 
 var maxTarget = new BN('ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff', 'hex')
 function createBlock (prev, nonce, bits) {
-  var i = nonce || 0, header
+  var i = nonce || 0
+  var header
   do {
     header = new bitcore.BlockHeader({
       version: 1,
@@ -90,8 +91,8 @@ test('blockchain paths', function (t) {
   })
 
   t.test('simple path with no fork', function (t) {
-    var from = { height: 2, header: headers[1] },
-      to = { height: 10, header: headers[9] }
+    var from = { height: 2, header: headers[1] }
+    var to = { height: 10, header: headers[9] }
     chain.getPath(from, to, function (err, path) {
       if (err) return t.end(err)
       t.ok(path)
@@ -109,8 +110,8 @@ test('blockchain paths', function (t) {
   })
 
   t.test('backwards path with no fork', function (t) {
-    var from = { height: 10, header: headers[9] },
-      to = { height: 2, header: headers[1] }
+    var from = { height: 10, header: headers[9] }
+    var to = { height: 2, header: headers[1] }
     chain.getPath(from, to, function (err, path) {
       if (err) return t.end(err)
       t.ok(path)
@@ -138,8 +139,8 @@ test('blockchain paths', function (t) {
   })
 
   t.test('path with fork', function (t) {
-    var from = { height: 10, header: headers[9] },
-      to = { height: 15, header: headers2[9] }
+    var from = { height: 10, header: headers[9] }
+    var to = { height: 15, header: headers2[9] }
     chain.getPath(from, to, function (err, path) {
       if (err) return t.end(err)
       t.ok(path)
@@ -161,8 +162,8 @@ test('blockchain paths', function (t) {
   })
 
   t.test('backwards path with fork', function (t) {
-    var from = { height: 15, header: headers2[9] },
-      to = { height: 10, header: headers[9] }
+    var from = { height: 15, header: headers2[9] }
+    var to = { height: 10, header: headers[9] }
     chain.getPath(from, to, function (err, path) {
       if (err) return t.end(err)
       t.ok(path)
@@ -214,7 +215,7 @@ test('blockchain verification', function (t) {
     chain.processHeaders(headers, t.end)
   })
 
-  t.test('error on header that doesn\'t connect', function (t) {
+  t.test("error on header that doesn't connect", function (t) {
     var block = createBlock()
     chain.processHeaders([ block ], function (err) {
       t.ok(err)
